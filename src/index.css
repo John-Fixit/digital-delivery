@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+
+/* customize tailwind */
+@theme {
+  --color-primary: #6324eb;
+  --color-background-light:#f8fafc;
+  --color-background-dark: #161121;
+}
+
+
+/* custom styles */
+
+.material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
