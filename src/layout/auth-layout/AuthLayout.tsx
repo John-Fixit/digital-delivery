@@ -1,6 +1,25 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+
+const currentPg = (location: string) => {
+  const authRoute = {
+    login: "/auth/login",
+    register: "/auth/register",
+  };
+  const entry = Object.entries(authRoute).find(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ([key, value]: [string, string]) => value === location,
+  );
+
+  return entry?.[0] as string;
+};
 
 const AuthLayout = () => {
+  const location = useLocation().pathname;
+
+  const currentPage = currentPg(location);
+
+  const navigate = useNavigate();
+
   return (
     <>
       <main className="bg-background-light dark:bg-background-dark text-[#120e1b] dark:text-[#f9f8fc] font-display min-h-screen overflow-x-hidden">
@@ -93,32 +112,47 @@ const AuthLayout = () => {
               </div>
             </header>
 
-            <div className="flex flex-1 flex-col justify-center px-8 sm:px-12 md:px-24 lg:px-20 xl:px-32 py-12 overflow-y-auto ">
+            <div className="flex flex-1 flex-col justifycenter px-8 sm:px-12 md:px-24 lg:px-20 xl:px-32 py-12 overflow-y-auto ">
               <div className="w-full max-w-md mx-auto">
                 <div className="mb-8">
                   <h2 className="text-3xl font-bold tracking-tight text-[#120e1b] dark:text-[#f9f8fc]">
-                    Welcome back
+                    {currentPage === "register"
+                      ? `Join LogiTrusr`
+                      : "Welcome Back"}
                   </h2>
                   <p className="mt-2 text-[#654d99] dark:text-[#a394c8]">
-                    Please enter your details to sign in to your account.
+                    {currentPage === "register"
+                      ? "Create your account to start shipping and delivering safely."
+                      : "Please enter your details to sign in to your account."}
                   </p>
                 </div>
                 {/* <!-- Toggle Switch --> */}
                 <div className="mb-8">
                   <div className="flex h-11 items-center justify-center rounded-lg bg-[#ebe7f3] dark:bg-[#2d2540] p-1">
-                    <label className="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-[#161121] has-[:checked]:shadow-sm has-[:checked]:text-[#120e1b] dark:has-[:checked]:text-[#f9f8fc] text-[#654d99] text-sm font-semibold transition-all">
+                    <label
+                      className="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-checked:bg-white dark:has-checked:bg-background-dark has-checked:shadow-sm has-checked:text-[#120e1b] dark:has-checked:text-[#f9f8fc] text-[#654d99] text-sm font-semibold transition-all"
+                      onClick={() => {
+                        navigate("/auth/login");
+                      }}
+                    >
                       <span>Login</span>
                       <input
-                        defaultChecked
+                        checked={currentPage === "login"}
                         className="invisible w-0"
                         name="auth-mode"
                         type="radio"
                         value="login"
                       />
                     </label>
-                    <label className="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-[#161121] has-[:checked]:shadow-sm has-[:checked]:text-[#120e1b] dark:has-[:checked]:text-[#f9f8fc] text-[#654d99] text-sm font-semibold transition-all">
+                    <label
+                      className="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-checked:bg-white dark:has-checked:bg-background-dark has-checked:shadow-sm has-checked:text-[#120e1b] dark:has-checked:text-[#f9f8fc] text-[#654d99] text-sm font-semibold transition-all"
+                      onClick={() => {
+                        navigate("/auth/register");
+                      }}
+                    >
                       <span>Sign-up</span>
                       <input
+                        checked={currentPage === "register"}
                         className="invisible w-0"
                         name="auth-mode"
                         type="radio"
