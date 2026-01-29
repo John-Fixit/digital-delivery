@@ -6,8 +6,7 @@ const currentPg = (location: string) => {
     register: "/auth/register",
   };
   const entry = Object.entries(authRoute).find(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ([key, value]: [string, string]) => value === location,
+    ([, value]: [string, string]) => value === location,
   );
 
   return entry?.[0] as string;
