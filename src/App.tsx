@@ -3,6 +3,7 @@ import LandingPage from "./pages/landing-page/LandingPage";
 import Login from "./pages/login/Login";
 import AuthLayout from "./layout/auth-layout/AuthLayout";
 import Register from "./pages/register/Register";
+import { useSystemTheme } from "./hooks/useSystemTheme";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
   },
 ]);
 const App = () => {
+  useSystemTheme();
   return (
     <>
       <RouterProvider router={router} />

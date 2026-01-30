@@ -1,4 +1,13 @@
+import { useState } from "react";
+import Input from "../../shared/ui/input/Input";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import Button from "../../shared/ui/button/Button";
+
 const LoginForm = () => {
+  const [isPwsVisible, setPwsIsVisible] = useState(false);
+
+  const toggleVisibility = () => setPwsIsVisible(!isPwsVisible);
+
   return (
     <>
       <form className="space-y-5">
@@ -9,13 +18,7 @@ const LoginForm = () => {
           >
             Email address
           </label>
-          <input
-            className="block w-full rounded-lg border-[#ebe7f3] dark:border-[#2d2540] bg-white dark:bg-transparent py-2.5 text-[#120e1b] dark:text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary sm:text-sm"
-            id="email"
-            name="email"
-            placeholder="name@company.com"
-            type="email"
-          />
+          <Input type="email" size="lg" placeholder="Enter your email" />
         </div>
         <div>
           <div className="flex items-center justify-between mb-1.5">
@@ -32,21 +35,25 @@ const LoginForm = () => {
               Forgot password?
             </a>
           </div>
-          <div className="relative">
-            <input
-              className="block w-full rounded-lg border-[#ebe7f3] dark:border-[#2d2540] bg-white dark:bg-transparent py-2.5 text-[#120e1b] dark:text-white placeholder:text-gray-400 focus:border-primary focus:ring-primary sm:text-sm"
-              id="password"
-              name="password"
-              placeholder="••••••••"
-              type="password"
-            />
-            <button
-              className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#654d99] hover:text-primary"
-              type="button"
-            >
-              <span className="material-symbols-outlined">visibility</span>
-            </button>
-          </div>
+          <Input
+            type={isPwsVisible ? "text" : "password"}
+            size="lg"
+            placeholder="******"
+            endContent={
+              <button
+                aria-label="toggle password visibility"
+                className="focus:outline-solid outline-transparent cursor-pointer"
+                type="button"
+                onClick={toggleVisibility}
+              >
+                {isPwsVisible ? (
+                  <IoEyeOffOutline className="text-2xl text-default-400 pointer-events-none" />
+                ) : (
+                  <IoEyeOutline className="text-2xl text-default-400 pointer-events-none" />
+                )}
+              </button>
+            }
+          />
         </div>
         <div className="flex items-center">
           <input
@@ -62,12 +69,9 @@ const LoginForm = () => {
             Remember me for 30 days
           </label>
         </div>
-        <button
-          className="flex w-full justify-center rounded-lg bg-primary py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all"
-          type="submit"
-        >
-          Sign in to LogiTrust
-        </button>
+        <Button size="lg" fullWidth>
+          Sign in to Logicrow
+        </Button>
       </form>
     </>
   );

@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b border-solid border-[#e7ebf3] dark:border-gray-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-6 md:px-20 py-4">
@@ -7,7 +10,7 @@ const Navbar = () => {
             <div className="text-primary">
               <img
                 src="/logicrow.png"
-                alt=""
+                alt="logo"
                 className="objectcover h-12.5 w-12.5"
               />
             </div>
@@ -43,10 +46,20 @@ const Navbar = () => {
               </a>
             </nav>
             <div className="flex gap-3">
-              <button className="bg-primary text-white text-sm font-bold px-5 py-2.5 rounded-lg hover:bg-blue-700 transition-all shadow-sm">
-                Start Shipping
+              <button
+                className="bg-primary text-white text-sm font-bold px-5 py-2.5 rounded-lg hover:bg-blue-700 transition-all shadow-sm cursor-pointer"
+                onClick={() => {
+                  navigate("/auth/register");
+                }}
+              >
+                Get started
               </button>
-              <button className="bg-[#e7ebf3] dark:bg-gray-800 text-[#0e121b] dark:text-white text-sm font-bold px-5 py-2.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+              <button
+                className="bg-[#e7ebf3] dark:bg-gray-800 text-[#0e121b] dark:text-white text-sm font-bold px-5 py-2.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all cursor-pointer"
+                onClick={() => {
+                  navigate("/auth/login");
+                }}
+              >
                 Login
               </button>
             </div>

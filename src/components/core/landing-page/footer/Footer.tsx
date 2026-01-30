@@ -9,7 +9,7 @@ const Footer = () => {
                 <div className="text-primary">
                   <img
                     src="/logicrow.png"
-                    alt=""
+                    alt="logo"
                     className="objectcover h-12.5 w-12.5"
                   />
                 </div>
