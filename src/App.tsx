@@ -4,6 +4,8 @@ import Login from "./pages/login/Login";
 import AuthLayout from "./layout/auth-layout/AuthLayout";
 import Register from "./pages/register/Register";
 import { useSystemTheme } from "./hooks/useSystemTheme";
+import HomeLayout from "./layout/home-layout/HomeLayout";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,16 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/home",
+    element: <HomeLayout />,
+    children: [
+      {
+        path: "",
+        element: <Dashboard />,
       },
     ],
   },

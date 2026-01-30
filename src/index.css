@@ -8,9 +8,42 @@
 
 /* customize tailwind */
 @theme {
+  /* Primary Brand Color */
   --color-primary: #6324eb;
+  --color-primary-hover: #5219d9;
+  --color-primary-light: rgba(99, 36, 235, 0.1);
+
+  /* Background Colors */
   --color-background-light: #f8fafc;
-  --color-background-dark: #161121;
+  --color-background-dark: #0a0e1a;
+  --color-background-dark-elevated: #12161f;
+
+  /* Card/Surface Colors */
+  --color-card-dark: #141824;
+  --color-card-dark-hover: #1a1f2e;
+  --color-card-light: #ffffff;
+
+  /* Border Colors */
+  --color-border-dark: #1e2533;
+  --color-border-dark-subtle: #252b3a;
+  --color-border-light: #e5e7eb;
+
+  /* Text Colors */
+  --color-text-primary-dark: #e4e9f2;
+  --color-text-secondary-dark: #8b92a8;
+  --color-text-tertiary-dark: #6b7280;
+  --color-text-primary-light: #1f2937;
+  --color-text-secondary-light: #6b7280;
+
+  /* Status Colors (adjusted for dark mode) */
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.1);
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245, 158, 11, 0.1);
+  --color-danger: #ef4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.1);
+  --color-info: #3b82f6;
+  --color-info-bg: rgba(59, 130, 246, 0.1);
 }
 
 /* custom styles */
@@ -21,4 +54,14 @@
     "wght" 400,
     "GRAD" 0,
     "opsz" 24;
+}
+
+.step-completed {
+  @apply bg-primary text-white;
+}
+.step-active {
+  @apply border-primary text-primary bg-white;
+}
+.step-pending {
+  @apply border-slate-200 text-slate-400 bg-white;
 }
