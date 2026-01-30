@@ -65,3 +65,7 @@
 .step-pending {
   @apply border-slate-200 text-slate-400 bg-white;
 }
+
+.landing-page-spacing {
+  @apply max-w-7xl mx-auto px-6 md:px-10 lg:px-5;
+}

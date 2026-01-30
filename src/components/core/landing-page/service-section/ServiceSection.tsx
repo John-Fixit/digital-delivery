@@ -1,8 +1,10 @@
+import Button from "../../../shared/ui/button/Button";
+
 const ServiceSection = () => {
   return (
     <>
       <section
-        className="py-20 bg-white dark:bg-gray-900/50 rounded-3xl px-10 border border-[#e7ebf3] dark:border-gray-800"
+        className="landing-page-spacing py-10 bg-background-light dark:bg-background-dark rounded-3xl px-20 border border-border-light dark:border-border-dark"
         id="services"
       >
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
@@ -21,9 +23,9 @@ const ServiceSection = () => {
           </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-background-light dark:bg-gray-800 p-8 rounded-2xl border border-transparent hover:border-primary/20 hover:shadow-xl transition-all group">
+          <div className="bg-card-light dark:bg-card-dark p-8 rounded-2xl border border-transparent hover:border-primary/20 hover:shadow transition-all group">
             <div className="flex justify-between items-start mb-6">
-              <div className="p-3 bg-white dark:bg-gray-700 rounded-xl shadow-sm">
+              <div className="p-3 bg-white dark:bg-primary/10 rounded-xl shadow-sm">
                 <span className="material-symbols-outlined text-primary text-3xl">
                   moped
                 </span>
@@ -53,13 +55,13 @@ const ServiceSection = () => {
                 Real-time live tracking
               </li>
             </ul>
-            <button className="w-full py-3 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
+            <Button variant="bordered" fullWidth size="lg">
               Select Local
-            </button>
+            </Button>
           </div>
-          <div className="bg-background-light dark:bg-gray-800 p-8 rounded-2xl border border-transparent hover:border-primary/20 hover:shadow-xl transition-all group">
+          <div className="bg-card-light dark:bg-card-dark p-8 rounded-2xl border border-transparent hover:border-primary/20 hover:shadow transition-all group">
             <div className="flex justify-between items-start mb-6">
-              <div className="p-3 bg-white dark:bg-gray-700 rounded-xl shadow-sm">
+              <div className="p-3 bg-white dark:bg-primary/10 rounded-xl shadow-sm">
                 <span className="material-symbols-outlined text-primary text-3xl">
                   local_shipping
                 </span>
@@ -86,9 +88,9 @@ const ServiceSection = () => {
                 Insurance coverage included
               </li>
             </ul>
-            <button className="w-full py-3 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
+            <Button variant="bordered" fullWidth size="lg">
               Select Interstate
-            </button>
+            </Button>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 const Trust_Safety = () => {
   return (
     <>
-      <section className="py-24" id="safety">
+      <section className="landing-page-spacing py-24" id="safety">
         <div className="bg-primary rounded-3xl overflow-hidden relative">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="p-12 md:p-20 text-white flex flex-col justify-center gap-6">

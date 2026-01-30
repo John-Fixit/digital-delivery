@@ -1,7 +1,7 @@
 const HeroSection = () => {
   return (
     <>
-      <section className="py-16 md:py-14 lg:py-12">
+      <section className="landing-page-spacing py-16 md:py-14 lg:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-4">
