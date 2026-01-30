@@ -12,7 +12,7 @@ const LandingPage = () => {
     <>
       <main className="bg-background-light dark:bg-background-dark text-[#0e121b] dark:text-white transition-colors duration-300">
         <Navbar />
-        <main className="max-w7xl mx-auto px-6 md:px-10 lg:px-5 space-y-3">
+        <main className="space-y-3">
           <HeroSection />
           <HowItWorks />
           <ServiceSection />

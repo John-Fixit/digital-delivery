@@ -1,7 +1,7 @@
 const HowItWorks = () => {
   return (
     <>
-      <section className="w-full bg-gray-100">
+      <section className="w-full bg-gray-100 dark:bg-gray-900/40">
         <section
           className="landing-page-spacing py-20 border-t border-[#e7ebf3] dark:border-gray-800"
           id="how-it-works"
