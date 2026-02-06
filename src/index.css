@@ -17,6 +17,8 @@
   --color-background-light: #f8fafc;
   --color-background-dark: #0a0e1a;
   --color-background-dark-elevated: #12161f;
+  --color-success: #16a34a;
+  --color-pending: #f59e0b;
 
   /* Card/Surface Colors */
   --color-card-dark: #141824;
