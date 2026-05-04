@@ -8,6 +8,7 @@ interface PricingSummaryProps {
   total: number;
   onCreateShipment: () => void;
   onSaveDraft: () => void;
+  isSubmitting?: boolean;
 }
 
 const PricingSummary: React.FC<PricingSummaryProps> = ({
@@ -18,6 +19,7 @@ const PricingSummary: React.FC<PricingSummaryProps> = ({
   total,
   onCreateShipment,
   onSaveDraft,
+  isSubmitting = false,
 }) => {
   return (
     <div className="sticky top-24 space-y-4">
@@ -77,17 +79,21 @@ const PricingSummary: React.FC<PricingSummaryProps> = ({
           </div>
           <div className="space-y-3 pt-4">
             <button
+              type="button"
               onClick={onCreateShipment}
-              className="w-full h-12 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2"
+              disabled={isSubmitting}
+              className="w-full h-12 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-60"
             >
-              <span>Create Shipment</span>
+              <span>{isSubmitting ? "Creating…" : "Create Shipment"}</span>
               <span className="material-symbols-outlined text-xl">
                 arrow_forward
               </span>
             </button>
             <button
+              type="button"
               onClick={onSaveDraft}
-              className="w-full h-12 bg-card-light dark:bg-card-dark text-text-primary-light dark:text-text-primary-dark font-bold rounded-xl border border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-card-dark-hover transition-all flex items-center justify-center gap-2"
+              disabled={isSubmitting}
+              className="w-full h-12 bg-card-light dark:bg-card-dark text-text-primary-light dark:text-text-primary-dark font-bold rounded-xl border border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-card-dark-hover transition-all flex items-center justify-center gap-2 disabled:opacity-60"
             >
               <span className="material-symbols-outlined text-xl">draft</span>
               <span>Save as Draft</span>

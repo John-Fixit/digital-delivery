@@ -8,45 +8,100 @@ import HomeLayout from "./layout/home-layout/HomeLayout";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Wallet from "./pages/wallet/Wallet";
 import ShipmentPage from "./pages/my-shipment";
+import ShipmentTracking from "./pages/shipment-tracking";
+import NotFound from "./pages/not-found/NotFound";
+import NotificationCenter from "./pages/notification-center";
+import DisputesPage from "./pages/disputes";
+import VerifyEmail from "./pages/auth/VerifyEmail";
+import ClerkGoogleCallback from "./pages/auth/ClerkGoogleCallback";
+import AppRoot from "./components/auth/AppRoot";
+import RequireAuth from "./components/auth/RequireAuth";
+import AuthEntryGate from "./components/auth/AuthEntryGate";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <LandingPage />,
-  },
-  {
-    path: "/auth",
-    element: <AuthLayout />,
+    element: <AppRoot />,
     children: [
       {
-        path: "register",
-        element: <Register />,
+        index: true,
+        element: (
+          <AuthEntryGate redirectMode="home">
+            <LandingPage />
+          </AuthEntryGate>
+        ),
       },
       {
-        path: "login",
-        element: <Login />,
+        path: "auth",
+        element: <AuthLayout />,
+        children: [
+          {
+            path: "register",
+            element: (
+              <AuthEntryGate redirectMode="home">
+                <Register />
+              </AuthEntryGate>
+            ),
+          },
+          {
+            path: "login",
+            element: (
+              <AuthEntryGate redirectMode="fromParam">
+                <Login />
+              </AuthEntryGate>
+            ),
+          },
+          {
+            path: "verify-email",
+            element: <VerifyEmail />,
+          },
+          {
+            path: "clerk-google-callback",
+            element: <ClerkGoogleCallback />,
+          },
+        ],
       },
-    ],
-  },
-  {
-    path: "/home",
-    element: <HomeLayout />,
-    children: [
       {
-        path: "",
-        element: <Dashboard />,
+        path: "home",
+        element: (
+          <RequireAuth>
+            <HomeLayout />
+          </RequireAuth>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+          {
+            path: "wallet",
+            element: <Wallet />,
+          },
+          {
+            path: "shipment",
+            element: <ShipmentPage />,
+          },
+          {
+            path: "tracking",
+            element: <ShipmentTracking />,
+          },
+          {
+            path: "notifications",
+            element: <NotificationCenter />,
+          },
+          {
+            path: "disputes",
+            element: <DisputesPage />,
+          },
+        ],
       },
       {
-        path: "wallet",
-        element: <Wallet />,
-      },
-      {
-        path: "shipment",
-        element: <ShipmentPage />,
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
 ]);
+
 const App = () => {
   useSystemTheme();
   return (

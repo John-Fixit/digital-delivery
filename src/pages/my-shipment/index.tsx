@@ -1,4 +1,4 @@
-import MyShipments from "../../components/core/shipment/MyShiments";
+import MyShipments from "../../components/core/shipment/MyShipments";
 
 const ShipmentPage = () => {
   return (

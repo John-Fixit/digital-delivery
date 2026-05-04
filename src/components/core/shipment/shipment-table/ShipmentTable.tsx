@@ -4,15 +4,10 @@ import type { ShipmentType } from "../../../../utils/type-config";
 
 type PropTypes = {
   shipments: ShipmentType[];
-  activeShipmentId?: string;
-  onShipmentClick?: (trackingId: string) => void;
+  onViewShipment: (trackingId: string) => void;
 };
 
-const ShipmentTable: FC<PropTypes> = ({
-  shipments,
-  activeShipmentId,
-  onShipmentClick,
-}) => {
+const ShipmentTable: FC<PropTypes> = ({ shipments, onViewShipment }) => {
   return (
     <div className="bg-card-light dark:bg-background-dark-elevated rounded-xl border border-border-light dark:border-border-dark overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
@@ -50,10 +45,7 @@ const ShipmentTable: FC<PropTypes> = ({
               <ShipmentTableRow
                 key={shipment.trackingId}
                 shipment={shipment}
-                isActive={shipment.trackingId === activeShipmentId}
-                onClick={() =>
-                  onShipmentClick && onShipmentClick(shipment.trackingId)
-                }
+                onViewShipment={() => onViewShipment(shipment.trackingId)}
               />
             ))}
           </tbody>

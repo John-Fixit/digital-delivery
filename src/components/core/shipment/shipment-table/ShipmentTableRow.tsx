@@ -3,14 +3,9 @@ import type { ShipmentType } from "../../../../utils/type-config";
 
 type PropTypes = {
   shipment: ShipmentType;
-  isActive: boolean;
-  onClick: () => void;
+  onViewShipment: () => void;
 };
-const ShipmentTableRow: FC<PropTypes> = ({
-  shipment,
-  isActive = false,
-  onClick,
-}) => {
+const ShipmentTableRow: FC<PropTypes> = ({ shipment, onViewShipment }) => {
   const getStatusColor = (status: "In Transit" | "Pending" | "Delivered") => {
     const colors = {
       "In Transit": "bg-info-bg text-info",
@@ -45,16 +40,9 @@ const ShipmentTableRow: FC<PropTypes> = ({
   const paymentInfo = getPaymentStatus(shipment.payment);
 
   return (
-    <tr
-      onClick={onClick}
-      className={`transition-colors cursor-pointer ${
-        isActive
-          ? "bg-primary-light border-l-4 border-l-primary"
-          : "hover:bg-gray-50 dark:hover:bg-card-dark-hover border-l-4 border-l-transparent"
-      }`}
-    >
+    <tr className="transition-colors hover:bg-gray-50 dark:hover:bg-card-dark-hover border-l-4 border-l-transparent">
       <td
-        className={`px-4 sm:px-6 py-5 font-medium ${isActive ? "text-primary" : "text-text-primary-light dark:text-text-primary-dark"}`}
+        className="px-4 sm:px-6 py-5 font-medium text-text-primary-light dark:text-text-primary-dark"
       >
         {shipment.trackingId}
       </td>
@@ -110,8 +98,12 @@ const ShipmentTableRow: FC<PropTypes> = ({
         </span>
       </td>
       <td className="px-4 sm:px-6 py-5 text-right">
-        <button className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-gray-500 dark:text-gray-400 transition-colors">
-          <span className="material-symbols-outlined">more_vert</span>
+        <button
+          type="button"
+          onClick={onViewShipment}
+          className="inline-flex items-center rounded-md bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/20 transition-colors"
+        >
+          View details
         </button>
       </td>
     </tr>

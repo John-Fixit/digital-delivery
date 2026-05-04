@@ -1,13 +1,18 @@
 // src/layout/home-layout/HomeLayout.jsx
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import useSidebarStore from "../../hooks/use-sidebar-store";
 import Sidebar from "../../components/shared/sidebar/Sidebar";
 import Button from "../../components/shared/ui/button/Button";
 import Input from "../../components/shared/ui/input/Input";
+import useDrawerStore from "../../hooks/use-drawer-store";
+import { DRAWER_NAMES } from "../../lib/overlay-names";
+import OverlayRoot from "../../components/shared/overlay/OverlayRoot";
 
 const HomeLayout = () => {
   const { toggleSidebar } = useSidebarStore();
+  const { openDrawer } = useDrawerStore();
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
@@ -45,12 +50,19 @@ const HomeLayout = () => {
                 isIconOnly
                 variant="flat"
                 className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+                onPress={() => navigate("/home/notifications")}
               >
                 <span className="material-symbols-outlined text-xl">
                   notifications
                 </span>
               </Button>
-              <Button>
+              <Button
+                onPress={() =>
+                  openDrawer(DRAWER_NAMES.CREATE_SHIPMENT, {
+                    config: { size: "4xl", customWidth: "max-w-4xl" },
+                  })
+                }
+              >
                 <span className="material-symbols-outlined text-lg">add</span>
                 New Shipment
               </Button>
@@ -63,6 +75,7 @@ const HomeLayout = () => {
           <Outlet />
         </main>
       </div>
+      <OverlayRoot />
     </div>
   );
 };

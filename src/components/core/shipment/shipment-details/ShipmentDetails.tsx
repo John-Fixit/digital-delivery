@@ -1,16 +1,21 @@
 import type { FC } from "react";
 import type { ShipmentType } from "../../../../utils/type-config";
+import useModalStore from "../../../../hooks/use-modal-store";
+import useDrawerStore from "../../../../hooks/use-drawer-store";
+import { DRAWER_NAMES, MODAL_NAMES } from "../../../../lib/overlay-names";
 
 export type PropTypes = {
   shipment: ShipmentType;
 };
 
 const ShipmentDetails: FC<PropTypes> = ({ shipment }) => {
+  const { openModal } = useModalStore();
+  const { openDrawer } = useDrawerStore();
+
   if (!shipment) return null;
 
   return (
-    <aside className="w-full lg:w-100 bg-card-light dark:bg-card-dark border-l border-border-light dark:border-border-dark flex flex-col h-[calc(100vh-64px)] overflow-y-auto lg:sticky lg:top-16 shadow-2xl">
-      {/* Drawer Header */}
+    <div className="w-full bg-card-light dark:bg-background-dark-elevated flex flex-col">
       <div className="p-6 border-b border-border-light dark:border-border-dark">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark">
@@ -183,12 +188,33 @@ const ShipmentDetails: FC<PropTypes> = ({ shipment }) => {
           <button className="w-full py-3 bg-primary text-white font-bold rounded-lg shadow-sm hover:bg-primary-hover transition-colors">
             Contact Rider
           </button>
-          <button className="w-full py-3 border border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-card-dark-hover transition-colors">
+          <button
+            type="button"
+            onClick={() =>
+              openDrawer(DRAWER_NAMES.ESCROW_MILESTONES, {
+                data: { trackingId: shipment.trackingId },
+                config: { size: "2xl", customWidth: "max-w-2xl" },
+              })
+            }
+            className="w-full py-3 border border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-card-dark-hover transition-colors"
+          >
+            Escrow Milestones
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              openModal(MODAL_NAMES.CREATE_DISPUTE, {
+                data: { trackingId: shipment.trackingId },
+                config: { size: "lg" },
+              })
+            }
+            className="w-full py-3 border border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-card-dark-hover transition-colors"
+          >
             Report an Issue
           </button>
         </div>
       </div>
-    </aside>
+    </div>
   );
 };
 

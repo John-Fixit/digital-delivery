@@ -1,6 +1,6 @@
 import Button from "../../../shared/ui/button/Button";
 
-const EmptyShipment = () => {
+const EmptyShipment = ({ onCreate }: { onCreate: () => void }) => {
   return (
     <>
       <div className="flex-1 flex flex-col items-center justify-center p-8">
@@ -35,7 +35,7 @@ const EmptyShipment = () => {
             secure, escrow-protected logistics today.
           </p>
           <div className="flex flex-col gap-4 w-full">
-            <Button size="lg" radius="lg">
+            <Button size="lg" radius="lg" onPress={onCreate}>
               <span className="material-symbols-outlined">add_circle</span>
               <span>Create New Shipment</span>
             </Button>

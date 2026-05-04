@@ -15,6 +15,7 @@ import useSidebarStore from "../../../hooks/use-sidebar-store";
 import Button from "../ui/button/Button";
 import { preProfileLink } from "../../../utils/pre-profile-link";
 import { navItems } from "../../../lib/sidebar-menu-items";
+import useCurrentUser from "../../../hooks/use-current-user";
 
 type DropDownTargetStateType = {
   state?: boolean;
@@ -44,7 +45,8 @@ const Sidebar = () => {
     if (screenSize.lte("md")) toggleSidebar();
   };
 
-  const profileImage = `https://lh3.googleusercontent.com/aida-public/AB6AXuD46bcj4HtJf8bj6ghKxpvmzifUAEPbdNn-oJivWOHpnhBTn74aOaCAnJiW1ycae6VmRgnLQoMGGmGGx5oN1-DmtJSEBrCYpyE94FinxbagfFdjmSk1n7q91WyTivx4dM-IKM3WhQEGEwuDLNntSD8fWrauFEOQMaGMaHEuZ_QOSOsgHvxop-ghNwY7y_SGlt7i_C2cD9u5i6yEQQnq7hYvlMcDZbGIcPoQZjenem_IQlibbeW2_5HkErttTxM-CzgToI2f8RRdRB4`;
+  const { user } = useCurrentUser();
+
   return (
     <>
       {/* Overlay for mobile/tablet when sidebar is open */}
@@ -89,7 +91,7 @@ const Sidebar = () => {
                 !sidebarOpen && "lg:hidden",
               )}
             >
-              Logicrow
+              LogiTrust
             </h1>
           </div>
         </div>
@@ -104,19 +106,26 @@ const Sidebar = () => {
             <div className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
               <Avatar
                 className="w-10 h-10 cursor-pointer"
-                src={profileImage || preProfileLink(`John Fixit`)}
+                src={preProfileLink(user?.full_name || "")}
               />
               <div className="flex flex-col">
-                <h1 className="text-sm font-semibold">Alex Johnson</h1>
+                <h1 className="text-sm font-semibold">{user?.full_name}</h1>
                 <p className="text-slate-500 text-xs font-normal">
-                  Package Owner
+                  {user?.role === "customer"
+                    ? "Package Owner"
+                    : user?.role === "rider"
+                      ? "Rider"
+                      : "Driver"}
                 </p>
               </div>
             </div>
           </div>
           <ul className="space-y-1">
             {navItems.map((item) => {
-              const isActive = currentPath === item.path;
+              const isActive =
+                item.path === "/home"
+                  ? currentPath === "/home"
+                  : currentPath.startsWith(item.path);
               const Icon = isActive ? item?.activeIcon || item.icon : item.icon;
               const isDropActive = currentPath.startsWith(
                 item.relativePath as string,
@@ -278,7 +287,7 @@ export const LogoutPopover = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     // removeCurrentUser();
-    navigate("/login");
+    navigate("/auth/login");
   };
   return (
     <Popover

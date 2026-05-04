@@ -1,14 +1,6 @@
-// import { useState } from "react";
-import type { ShipmentType } from "../../../utils/type-config";
-import PageHeader from "../../shared/page-header/PageHeader";
-import EmptyShipment from "./empty-shipment/EmptyShipment";
-import ShipmentTabs from "./shiment-tabs/ShipmentTabs";
-import ShipmentFilters from "./shipment-filter/ShipmentFilter";
-import ShipmentTable from "./shipment-table/ShipmentTable";
-// import ShipmentDetails from "./shipment-details/ShipmentDetails";
-// import type { ShipmentType } from "../../../utils/type-config";
+import type { ShipmentType } from "../../utils/type-config";
 
-const shipmentsData: ShipmentType[] = [
+export const mockShipments: ShipmentType[] = [
   {
     trackingId: "TRK-8902",
     recipient: {
@@ -150,53 +142,3 @@ const shipmentsData: ShipmentType[] = [
     },
   },
 ];
-
-const MyShipments = () => {
-  // const [activeShipmentId, setActiveShipmentId] = useState("TRK-8902");
-  // const [drawerOpen, setDrawerOpen] = useState(true);
-
-  // const handleShipmentClick = (trackingId: string) => {
-  //   setActiveShipmentId(trackingId);
-  //   setDrawerOpen(true);
-  // };
-
-  // const activeShipment = shipmentsData.find(
-  //   (shipment) => shipment.trackingId === activeShipmentId,
-  // ) as ShipmentType;
-
-  return (
-    <main className="flex w-full flex-col lg:flex-row">
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 p-4 sm:p-6 lg:p-8">
-        <div className="w-full mx-auto">
-          <div className="flex flex-col gap-6">
-            {/* Title & Tabs */}
-            <div className="flex flex-col">
-              <PageHeader title="My Shipments" />
-              <ShipmentTabs activeTab="active" />
-            </div>
-
-            {/* Filters */}
-            <ShipmentFilters />
-
-            {/* Table Section */}
-            {shipmentsData?.length ? (
-              <ShipmentTable
-                shipments={shipmentsData}
-                // activeShipmentId={activeShipmentId}
-                // onShipmentClick={handleShipmentClick}
-              />
-            ) : (
-              <EmptyShipment />
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Right Side Drawer (Detailed View) */}
-      {/* {drawerOpen && <ShipmentDetails shipment={activeShipment} />} */}
-    </main>
-  );
-};
-
-export default MyShipments;

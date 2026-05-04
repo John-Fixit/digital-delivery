@@ -5,6 +5,11 @@ import Step2RecipientDetails from "./Step2RecipientDetails";
 import Step3PackageDetails from "./Step3PackageDetails";
 import Step4DeliveryOptions from "./Step4DeliveryOptions";
 import PricingSummary from "./PricingSummary";
+import useDrawerStore from "../../../../hooks/use-drawer-store";
+import { MODAL_NAMES } from "../../../../lib/overlay-names";
+import useModalStore from "../../../../hooks/use-modal-store";
+import { useCreateShipment } from "../../../../api-service/shipments/create-shipment";
+import { getApiErrorMessage } from "../../../../api-service/utils/error";
 
 interface FormData {
   // Step 1
@@ -25,8 +30,15 @@ interface FormData {
   deliveryType: "standard" | "express";
 }
 
-const CreateShipment: React.FC = () => {
+type PropTypes = {
+  variant?: "page" | "drawer";
+};
+
+const CreateShipment: React.FC<PropTypes> = ({ variant = "page" }) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const { closeDrawer } = useDrawerStore();
+  const { openModal } = useModalStore();
+  const createShipment = useCreateShipment();
   const [formData, setFormData] = useState<FormData>({
     senderName: "",
     senderPhone: "",
@@ -73,14 +85,76 @@ const CreateShipment: React.FC = () => {
     setCurrentStep(step);
   };
 
-  const handleCreateShipment = () => {
-    console.log("Creating shipment:", formData);
-    // Add your shipment creation logic here
+  const handleCreateShipment = async () => {
+    const weight = Number(formData.weight);
+    const value = Number(formData.value);
+    if (
+      !formData.senderName.trim() ||
+      !formData.recipientName.trim() ||
+      !formData.pickupAddress.trim() ||
+      !formData.deliveryAddress.trim() ||
+      Number.isNaN(weight) ||
+      weight <= 0 ||
+      Number.isNaN(value) ||
+      value < 0
+    ) {
+      openModal(MODAL_NAMES.APP_NOTICE, {
+        data: {
+          message:
+            "Please complete all steps with valid sender, recipient, addresses, weight, and value.",
+        },
+      });
+      return;
+    }
+    try {
+      await createShipment.mutateAsync({
+        senderName: formData.senderName,
+        senderPhone: formData.senderPhone,
+        pickupAddress: formData.pickupAddress,
+        recipientName: formData.recipientName,
+        recipientPhone: formData.recipientPhone,
+        deliveryAddress: formData.deliveryAddress,
+        category: formData.category,
+        weight,
+        value,
+        description: formData.description,
+        deliveryType: formData.deliveryType,
+      });
+      openModal(MODAL_NAMES.APP_NOTICE, {
+        data: { message: "Shipment created successfully." },
+      });
+      if (variant === "drawer") {
+        closeDrawer();
+      }
+    } catch (err) {
+      openModal(MODAL_NAMES.APP_NOTICE, {
+        data: { message: getApiErrorMessage(err, "Could not create shipment.") },
+      });
+    }
   };
 
   const handleSaveDraft = () => {
     console.log("Saving draft:", formData);
-    // Add your draft saving logic here
+    openModal(MODAL_NAMES.APP_NOTICE, {
+      data: {
+        message: "Draft was captured locally. API persistence comes next.",
+      },
+    });
+  };
+
+  const isDrawerMode = variant === "drawer";
+
+  const closeCreateDrawer = () => {
+    if (variant === "drawer") {
+      closeDrawer();
+      return;
+    }
+    openModal(MODAL_NAMES.APP_NOTICE, {
+      data: {
+        message:
+          "Use this flow to create a shipment. Closing is available in drawer mode.",
+      },
+    });
   };
 
   // Calculate pricing
@@ -101,17 +175,28 @@ const CreateShipment: React.FC = () => {
       />
 
       {/* Header */}
-      <div className="px-4 sm:px-8 pt-8 pb-4">
-        <h2 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark">
+      <div className="px-4 sm:px-8 pt-6 pb-4 flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark">
           Create New Shipment
-        </h2>
-        <p className="text-text-secondary-light dark:text-text-secondary-dark text-sm mt-1">
-          Complete the details below to list your shipment in the marketplace.
-        </p>
+          </h2>
+          <p className="text-text-secondary-light dark:text-text-secondary-dark text-sm mt-1">
+            Complete the details below to list your shipment in the marketplace.
+          </p>
+        </div>
+        {isDrawerMode ? (
+          <button
+            type="button"
+            onClick={closeCreateDrawer}
+            className="rounded-md p-1 text-text-secondary-light dark:text-text-secondary-dark hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
+        ) : null}
       </div>
 
       {/* Form Content */}
-      <div className="px-4 sm:px-8 pb-12 flex flex-col lg:flex-row gap-8">
+      <div className="px-4 sm:px-8 pb-8 flex flex-col lg:flex-row gap-6">
         <div className="flex-1 space-y-6">
           {/* Step 1: Sender Details */}
           {currentStep === 0 && (
@@ -196,19 +281,21 @@ const CreateShipment: React.FC = () => {
             distance={distance}
             escrowFee={escrowFee}
             total={total}
-            onCreateShipment={handleCreateShipment}
+            onCreateShipment={() => void handleCreateShipment()}
             onSaveDraft={handleSaveDraft}
+            isSubmitting={createShipment.isPending}
           />
         </aside>
       </div>
 
-      {/* Footer */}
-      <footer className="p-6 text-center mt-auto border-t border-border-light dark:border-border-dark">
-        <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
-          © 2024 Shipment Logistics Marketplace. All rights reserved. Secure SSL
-          Encrypted.
-        </p>
-      </footer>
+      {!isDrawerMode ? (
+        <footer className="p-6 text-center mt-auto border-t border-border-light dark:border-border-dark">
+          <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+            © 2024 Shipment Logistics Marketplace. All rights reserved. Secure
+            SSL Encrypted.
+          </p>
+        </footer>
+      ) : null}
     </main>
   );
 };

@@ -1,25 +1,34 @@
-const ShipmentTabs = ({ activeTab = "active" }) => {
-  const tabs = [
-    { id: "all", label: "All", count: 42 },
-    { id: "active", label: "Active", count: 12 },
-    { id: "pending", label: "Pending", count: 8 },
-    { id: "delivered", label: "Delivered", count: 15 },
+type ShipmentTabKey = "all" | "active" | "pending" | "delivered";
+
+type PropTypes = {
+  activeTab: ShipmentTabKey;
+  counts: Record<ShipmentTabKey, number>;
+  onTabChange: (tab: ShipmentTabKey) => void;
+};
+
+const ShipmentTabs = ({ activeTab, counts, onTabChange }: PropTypes) => {
+  const tabs: { id: ShipmentTabKey; label: string }[] = [
+    { id: "all", label: "All" },
+    { id: "active", label: "Active" },
+    { id: "pending", label: "Pending" },
+    { id: "delivered", label: "Delivered" },
   ];
 
   return (
     <div className="flex border-b border-border-light dark:border-border-dark gap-4 sm:gap-8 overflow-x-auto">
       {tabs.map((tab) => (
-        <a
+        <button
+          type="button"
           key={tab.id}
-          className={`flex items-center border-b-2 pb-3 text-sm whitespace-nowrap ${
+          className={`flex items-center border-b-2 pb-3 text-sm whitespace-nowrap cursor-pointer ${
             activeTab === tab.id
               ? "border-primary text-primary font-bold"
               : "border-transparent text-text-secondary-light dark:text-text-secondary-dark font-medium hover:text-primary transition-colors"
           }`}
-          href="#"
+          onClick={() => onTabChange(tab.id)}
         >
-          {tab.label} ({tab.count})
-        </a>
+          {tab.label} ({counts[tab.id]})
+        </button>
       ))}
     </div>
   );
