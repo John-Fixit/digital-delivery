@@ -86,7 +86,7 @@ const ServiceSection = () => {
                 <motion.div
                   initial={{ scale: 0, rotate: -15 }}
                   whileInView={{ scale: 1, rotate: 0 }}
-                  viewport={{ once: false }}
+                  viewport={{ once: true }}
                   transition={{
                     type: "spring",
                     stiffness: 280,

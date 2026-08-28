@@ -1,5 +1,4 @@
-import { motion, useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import {
   fadeLeft,
   fadeUp,
@@ -8,37 +7,7 @@ import {
   staggerItem,
   viewport,
 } from "../../../../lib/animations";
-
-function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: false });
-
-  useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const duration = 1200;
-    const step = 16;
-    const increment = target / (duration / step);
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, step);
-    return () => clearInterval(timer);
-  }, [inView, target]);
-
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
-  );
-}
+import AnimatedCounter from "../../../shared/ui/animated-counter/AnimatedCounter";
 
 const Trust_Safety = () => {
   return (
@@ -104,7 +73,7 @@ const Trust_Safety = () => {
                 variants={fadeUp}
                 whileHover={{ scale: 1.05, x: 4 }}
                 whileTap={{ scale: 0.97 }}
-                className="bg-white text-primary text-lg font-bold px-8 py-4 rounded-lg mt-4 hover:bg-blue-50 transition-all w-fit"
+                className="bg-white text-primary text-lg font-bold px-8 py-4 rounded-lg mt-4 hover:bg-primary-light transition-all w-fit"
               >
                 Learn about Safety
               </motion.button>
@@ -150,7 +119,7 @@ const Trust_Safety = () => {
                         className="h-2 bg-gray-100 dark:bg-gray-700 rounded overflow-hidden"
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
-                        viewport={{ once: false }}
+                        viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.5 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                         style={{ originX: 0, width: `${w * 100}%` }}
                       />
@@ -162,7 +131,7 @@ const Trust_Safety = () => {
                       className="text-sm font-bold text-[#0e121b] dark:text-white"
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
-                      viewport={{ once: false }}
+                      viewport={{ once: true }}
                       transition={{ delay: 0.9 }}
                     >
                       $4,250.00

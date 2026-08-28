@@ -8,16 +8,19 @@
 
 /* customize tailwind */
 @theme {
-  /* Primary Brand Color */
-  --color-primary: #6324eb;
-  --color-primary-hover: #5219d9;
-  --color-primary-light: rgba(99, 36, 235, 0.1);
+  /* Primary Brand Color (PRD spec) */
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-light: rgba(37, 99, 235, 0.1);
+
+  /* Secondary (PRD spec) */
+  --color-secondary: #0f172a;
+  --color-secondary-dark: #cbd5e1;
 
   /* Background Colors */
   --color-background-light: #f8fafc;
   --color-background-dark: #0a0e1a;
   --color-background-dark-elevated: #12161f;
-  --color-success: #16a34a;
   --color-pending: #f59e0b;
 
   /* Card/Surface Colors */
@@ -38,17 +41,28 @@
   --color-text-secondary-light: #6b7280;
 
   /* Status Colors (adjusted for dark mode) */
-  --color-success: #10b981;
+  --color-success: #16a34a;
   --color-success-bg: rgba(16, 185, 129, 0.1);
   --color-warning: #f59e0b;
   --color-warning-bg: rgba(245, 158, 11, 0.1);
-  --color-danger: #ef4444;
+  --color-danger: #dc2626;
   --color-danger-bg: rgba(239, 68, 68, 0.1);
   --color-info: #3b82f6;
   --color-info-bg: rgba(59, 130, 246, 0.1);
+
+  /* Typography */
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Premium surface shadow used across landing-page cards */
+  --shadow-premium: 0 25px 80px -30px rgba(14, 18, 27, 0.45);
 }
 
 /* custom styles */
+
+body {
+  font-family: var(--font-sans);
+}
 
 .material-symbols-outlined {
   font-variation-settings:

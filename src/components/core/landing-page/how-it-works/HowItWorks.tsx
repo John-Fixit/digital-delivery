@@ -88,7 +88,7 @@ const HowItWorks = () => {
                 <motion.div
                   initial={{ scale: 0, rotate: -20 }}
                   whileInView={{ scale: 1, rotate: 0 }}
-                  viewport={{ once: false }}
+                  viewport={{ once: true }}
                   transition={{
                     type: "spring",
                     stiffness: 260,

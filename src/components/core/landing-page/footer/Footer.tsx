@@ -1,10 +1,21 @@
+import { motion } from "framer-motion";
+import { fadeUp, staggerContainer, staggerItem, viewport } from "../../../../lib/animations";
+
+const paymentPartners = ["Paystack", "Flutterwave"];
+
 const Footer = () => {
   return (
     <>
       <footer className="bg-white dark:bg-background-dark border-t border-[#e7ebf3] dark:border-gray-800 pt-20 pb-10">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-20">
+        <motion.div
+          className="max-w-7xl mx-auto px-6 md:px-10 lg:px-20"
+          variants={staggerContainer(0.1)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            <div className="col-span-1 md:col-span-1 flex flex-col gap-6">
+            <motion.div variants={staggerItem} className="col-span-1 md:col-span-1 flex flex-col gap-6">
               <div className="flex items-center gap-3">
                 <div className="text-primary">
                   <img
@@ -18,8 +29,8 @@ const Footer = () => {
                 </h2>
               </div>
               <p className="text-sm text-[#4d6599] dark:text-gray-400 leading-relaxed">
-                The world's first escrow-protected logistics marketplace.
-                Bringing trust and reliability to every shipment.
+                The escrow-protected logistics marketplace. Bringing trust and
+                reliability to every shipment.
               </p>
               <div className="flex gap-4">
                 <a
@@ -43,8 +54,8 @@ const Footer = () => {
                   <span className="material-symbols-outlined">share</span>
                 </a>
               </div>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div variants={staggerItem}>
               <h4 className="font-bold text-[#0e121b] dark:text-white mb-6">
                 Services
               </h4>
@@ -70,8 +81,8 @@ const Footer = () => {
                   </a>
                 </li>
               </ul>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div variants={staggerItem}>
               <h4 className="font-bold text-[#0e121b] dark:text-white mb-6">
                 Company
               </h4>
@@ -97,8 +108,8 @@ const Footer = () => {
                   </a>
                 </li>
               </ul>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div variants={staggerItem}>
               <h4 className="font-bold text-[#0e121b] dark:text-white mb-6">
                 Legal
               </h4>
@@ -124,32 +135,31 @@ const Footer = () => {
                   </a>
                 </li>
               </ul>
-            </div>
+            </motion.div>
           </div>
-          <div className="border-t border-[#e7ebf3] dark:border-gray-800 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <motion.div
+            variants={fadeUp}
+            className="border-t border-[#e7ebf3] dark:border-gray-800 pt-10 flex flex-col md:flex-row justify-between items-center gap-6"
+          >
             <p className="text-sm text-[#4d6599] dark:text-gray-400">
-              © {new Date().getFullYear()} LogisEscrow Technologies Inc. All
+              © {new Date().getFullYear()} Logicrow Technologies Inc. All
               rights reserved.
             </p>
-            <div className="flex items-center gap-6">
-              <img
-                className="h-6 opacity-50 grayscale hover:grayscale-0 transition-all"
-                data-alt="Visa Logo"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqJJuMzahObnvWf0njXzLVHb2jS7o5S3ZKxo0PnRyugJtNKml1EkvHh6KCyN1buUasZvTbc4S5dWGh7lbrj6glF1XTcgDJ_8Gtk5VwrpSQrQmOUqBVpXVonqvqDd__6Rnfru9qzDFM48LNgFEjxq77hZdVuQfjkaxohdag5T2UXMxqVeK77bpzp8CgQv8S59rfB7Y_x4atYjKn6PZLcfUw1CRLm2PJBrDPS_hsQlUGfaSoO5smESW2YYEO9Ju815KG5WDciDZoMwo"
-              />
-              <img
-                className="h-6 opacity-50 grayscale hover:grayscale-0 transition-all"
-                data-alt="Mastercard Logo"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlAK7T72fgRSiT_R2zw3LhoHWEXiQ6lzgMn_95EIWtBkLvzGBkxsYNf3mi1TArhGOdjMk73V4Ldjr1tDxxgmXxfafehoyyu6rwwsQPKXfHP1QNyL3gmHSuUaC7jNuNupvDg8SgQGDNoLEEoFInoyC1eBLuJR9gvDzWvH6VF-ITR_mkTTEQGNSWtGVNVPt0w5OUye4JFh2Mb7HsURH7aFGTgDSRGemKhZEJ2yv8mCLBHeHQTHcEQrVUnzylIE3Kz5b1zYQ8GZpYraE"
-              />
-              <img
-                className="h-6 opacity-50 grayscale hover:grayscale-0 transition-all"
-                data-alt="Stripe Logo"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU83_fAjIdT-44xiotJDLGbK6kEyxgo42BM9sYAJnNQRbnbrAOykfklX1lPmlIz79eDhqinBY9cxdOuTgRUyKA6YV0dHO7nZOvffqKLjG37ACFC56BgmUfQcxEg5L0UE6CIVR9p2mKcpSE8xqY2L3IDUZ003i7nkpfIcOIRKqgxghLQueqLI-c0rJC_STbYkhtm6rf8ZMAoxJK0cMAJExtl5vtfPbX9i928PSgzSjm8rItkRIGaRN3EA84ZoiVkC5jhA3GtdYGxdg"
-              />
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-[#4d6599] dark:text-gray-400 mr-1">
+                Secured payments via
+              </span>
+              {paymentPartners.map((name) => (
+                <span
+                  key={name}
+                  className="text-xs font-bold px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-[#0e121b] dark:text-gray-200"
+                >
+                  {name}
+                </span>
+              ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </footer>
     </>
   );

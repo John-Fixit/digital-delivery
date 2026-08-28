@@ -9,8 +9,8 @@ export const ease = {
 };
 
 // Viewport trigger config
-export const viewport = { once: false, amount: 0.2 };
-export const viewportEager = { once: false, amount: 0.1 };
+export const viewport = { once: true, amount: 0.2 };
+export const viewportEager = { once: true, amount: 0.1 };
 
 // ─── Fade variants ────────────────────────────────────────
 export const fadeUp: Variants = {

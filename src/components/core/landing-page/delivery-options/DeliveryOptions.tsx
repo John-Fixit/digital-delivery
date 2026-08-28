@@ -12,33 +12,30 @@ import {
 
 const options = [
   {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAKvLs85DAiCPIoXqbfVPAHjlUvKMyYtsQthuqovetb-Mk18duduagNdkqCHvu05uyvAe2TJ6VUDe2wgOGNZ-o9uyJh8RZlsMybxDwgMQv8Oc6iwaYn0PYuv10AME0-Wu2qA2zxkMWSA2w7Psz7QYFkI2z--pOZHS0UXXAj5UYdXDIb10kHq4tVzaN4rcfwitDxQpcGAchFFyLiUJzMoDyIjLPUTpI1OvQK1qax2OTNH342k_zCY80vknQ-Qf32m5M9JqwDKWv5SQ",
-    alt: "Intra-state",
+    icon: "bolt",
+    gradient: "from-primary to-sky-400",
     title: "Intra-state Express",
     desc: "Quick delivery within your city or state. Average 4-hour turnaround.",
     variant: skewLeft,
-    delay: 0,
   },
   {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuALhE7hNrgvPSFjMXU534bRI5iMGWZwgyU-vFPH-Hgtby1vOGWfE8QDyYzF9hWWP-Q5ahTXLRzUG4pgEik1Cm0tg6BpMMcS25hrnH3q_dfY74G8FxSDyMn3GHgjl3dfRwK1FdCnJgN5yCsqRq9WU6EyEWFiF2r1YcHEKP-RXVoURYqSFWM03aPd1acxPhdfSdIYavcqXhRbWQ0LZc6OPajXlmVhp22cjBa0oAAXNFuTReHwtV5VkquJv8oeYKa7yZqI-5F6cPYo45s",
-    alt: "Park to park",
+    icon: "hub",
+    gradient: "from-secondary to-primary",
     title: "Park-to-Park",
     desc: "The most economical way for interstate cargo. Send from hub to hub.",
     variant: skewUp,
-    delay: 0.1,
   },
   {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAWP8tbX8gruKOO9bnyUlMeTFRa5melPD7E3m--Q8x-0c6oH9RClNoS24KuBMs-Hk-6Lb6NTVv29E7xOCA20kWIzurtJZ9WI50youVNtbU2ruq0Avf1FiIl8ZRaUjGPzXr134ecc0tRAZKefpMnSiY8RqZe5WtNgVsoQSXGYIpCaUOXh1ffzfbH9kVueawjDl4CdOmFV9wryBDVsZKn0tGN42mC7wm9A1bJxKmNUU89r01mGKm5j54YdgvkLV4eby-jz_Jkr04UsME",
-    alt: "Door to door",
+    icon: "door_front",
+    gradient: "from-sky-500 to-emerald-400",
     title: "Door-to-Door Courier",
     desc: "Premium service picking up from your doorstep and delivering directly to theirs.",
     variant: skewRight,
-    delay: 0.2,
   },
 ];
 
 const DeliveryOptions = () => {
-  const repeatViewport = { once: false, amount: 0.45 };
+  const repeatViewport = { once: true, amount: 0.45 };
 
   return (
     <>
@@ -74,7 +71,7 @@ const DeliveryOptions = () => {
             whileInView="visible"
             viewport={viewport}
           >
-            {options.map(({ src, alt, title, desc, variant }, i) => (
+            {options.map(({ icon, gradient, title, desc, variant }, i) => (
               <motion.div
                 key={i}
                 variants={variant}
@@ -82,23 +79,36 @@ const DeliveryOptions = () => {
                 transition={{ type: "spring", stiffness: 180, damping: 18 }}
                 className="group cursor-pointer"
               >
-                <div className="h-64 rounded-3xl overflow-hidden mb-6 shadow-md">
-                  <motion.img
-                    alt={alt}
-                    src={src}
-                    className="w-full h-full object-cover"
-                    initial={{ scale: 1.12 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: false }}
-                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
-                    whileHover={{ scale: 1.06 }}
+                <div
+                  className={`relative h-64 rounded-3xl overflow-hidden mb-6 shadow-md bg-linear-to-br ${gradient} flex items-center justify-center`}
+                >
+                  <div
+                    className="absolute inset-0 opacity-15"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px)",
+                      backgroundSize: "16px 16px",
+                    }}
                   />
+                  <motion.span
+                    className="material-symbols-outlined text-white relative z-10"
+                    style={{ fontSize: "88px" }}
+                    initial={{ scale: 0.8, opacity: 0, rotate: -8 }}
+                    whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 180,
+                      damping: 16,
+                      delay: i * 0.08,
+                    }}
+                    whileHover={{ scale: 1.1, rotate: 4 }}
+                  >
+                    {icon}
+                  </motion.span>
                 </div>
 
-                <motion.h4
-                  variants={fadeUp}
-                  className="text-2xl font-bold mb-2"
-                >
+                <motion.h4 variants={fadeUp} className="text-2xl font-bold mb-2">
                   {title}
                 </motion.h4>
                 <motion.p variants={fadeUp} className="text-gray-500">

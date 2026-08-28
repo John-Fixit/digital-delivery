@@ -12,7 +12,7 @@ import {
 const BecomeShipperOrRider = () => {
   return (
     <>
-      <section className="w-full landing-page-spacing py-24">
+      <section className="w-full landing-page-spacing py-24" id="carriers">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
           variants={staggerContainer(0.2)}
