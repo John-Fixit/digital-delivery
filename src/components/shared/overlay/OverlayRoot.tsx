@@ -17,6 +17,7 @@ import CreateDisputeModal from "./modals/CreateDisputeModal";
 import NotificationDetailsModal from "./modals/NotificationDetailsModal";
 import MilestoneApprovalModal from "./modals/MilestoneApprovalModal";
 import NotificationPreferencesModal from "./modals/NotificationPreferencesModal";
+import AddFundsModal from "./modals/AddFundsModal";
 import ShipmentDetailsDrawer from "../../core/shipment/drawers/ShipmentDetailsDrawer";
 import EscrowMilestonesDrawer from "../../core/shipment/drawers/EscrowMilestonesDrawer";
 
@@ -54,6 +55,9 @@ const ModalContentView = ({ name }: { name: string }) => {
   }
   if (name === MODAL_NAMES.NOTIFICATION_PREFERENCES) {
     return <NotificationPreferencesModal />;
+  }
+  if (name === MODAL_NAMES.ADD_FUNDS) {
+    return <AddFundsModal />;
   }
   return null;
 };

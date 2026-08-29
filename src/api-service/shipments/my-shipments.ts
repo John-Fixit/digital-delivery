@@ -3,6 +3,7 @@ import type { ShipmentType } from "../../utils/type-config";
 import { api, extractApiData } from "../index";
 import type { ApiEnvelope } from "../types";
 import { queryKeys } from "../../lib/query-keys";
+import { getPersistedAuthToken } from "../../lib/auth-storage";
 
 export const useMyShipments = () => {
   return useQuery({
@@ -11,6 +12,6 @@ export const useMyShipments = () => {
       const res = await api.get<ApiEnvelope<ShipmentType[]>>("/api/shipments");
       return extractApiData(res);
     },
-    enabled: typeof window !== "undefined" && !!localStorage.getItem("token"),
+    enabled: typeof window !== "undefined" && !!getPersistedAuthToken(),
   });
 };

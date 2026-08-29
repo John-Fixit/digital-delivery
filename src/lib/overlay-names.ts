@@ -10,6 +10,7 @@ export const MODAL_NAMES = {
   NOTIFICATION_DETAILS: "notification-details",
   MILESTONE_APPROVAL: "milestone-approval",
   NOTIFICATION_PREFERENCES: "notification-preferences",
+  ADD_FUNDS: "add-funds",
 } as const;
 
 export type DrawerName = (typeof DRAWER_NAMES)[keyof typeof DRAWER_NAMES];

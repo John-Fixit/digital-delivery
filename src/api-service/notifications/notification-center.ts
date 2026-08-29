@@ -3,6 +3,7 @@ import type { NotificationType } from "../../services/notifications/mock-notific
 import { api, extractApiData } from "../index";
 import type { ApiEnvelope } from "../types";
 import { queryKeys } from "../../lib/query-keys";
+import { getPersistedAuthToken } from "../../lib/auth-storage";
 
 type ApiNotification = {
   id: string;
@@ -41,6 +42,6 @@ export const useNotificationCenter = () => {
       const rows = extractApiData(res);
       return rows.map(mapToUi);
     },
-    enabled: typeof window !== "undefined" && !!localStorage.getItem("token"),
+    enabled: typeof window !== "undefined" && !!getPersistedAuthToken(),
   });
 };

@@ -17,4 +17,11 @@ export const queryKeys = {
     all: ["disputes"] as const,
     list: () => [...queryKeys.disputes.all, "list"] as const,
   },
+  wallet: {
+    all: ["wallet"] as const,
+    summary: () => [...queryKeys.wallet.all, "summary"] as const,
+  },
+  dashboard: {
+    all: ["dashboard"] as const,
+  },
 };

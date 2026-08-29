@@ -1,6 +1,11 @@
 import { MdOutlineSecurity } from "react-icons/md";
+import { useWallet } from "../../../../api-service/wallet/wallet";
+import { formatCurrency } from "../../../../utils/format-currency";
 
 const WalletStats = () => {
+  const { data: wallet, isLoading } = useWallet();
+  const activeEscrowCount = wallet?.lockedEscrowCount ?? 0;
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
@@ -15,13 +20,10 @@ const WalletStats = () => {
           </div>
           <div>
             <p className="text-[#120e1b] dark:text-default-700 text-4xl font-black tracking-tight leading-none">
-              $12,450.00
+              {isLoading ? "…" : formatCurrency(wallet?.availableBalance ?? 0)}
             </p>
-            <p className="text-success text-xs font-bold mt-2 flex items-center gap-1">
-              <span className="material-symbols-outlined text-sm">
-                trending_up
-              </span>
-              +12% from last month
+            <p className="text-[#654d99] text-xs font-medium mt-2">
+              Ready to fund new deliveries
             </p>
           </div>
         </div>
@@ -44,10 +46,12 @@ const WalletStats = () => {
           </div>
           <div>
             <p className="text-[#120e1b] dark:text-default-700 text-4xl font-black tracking-tight leading-none">
-              $3,200.00
+              {isLoading ? "…" : formatCurrency(wallet?.lockedFunds ?? 0)}
             </p>
             <p className="text-[#654d99] text-xs font-medium mt-2">
-              Active in 4 logistics orders
+              {activeEscrowCount > 0
+                ? `Active in ${activeEscrowCount} logistics order${activeEscrowCount === 1 ? "" : "s"}`
+                : "No funds currently held"}
             </p>
           </div>
           {/* <!-- Subtle pattern overlay --> */}
@@ -55,11 +59,10 @@ const WalletStats = () => {
             <MdOutlineSecurity className="text-[150px]" />
           </div>
         </div>
-        {/* <!-- Newest Feature: Weekly Spend --> */}
         <div className="bg-primary/5 p-8 rounded-xl border border-primary/10 dark:border-primary/30 shadow-sm flex flex-col gap-4">
           <div className="flex justify-between items-center">
             <p className="text-[#654d99] text-sm font-semibold uppercase tracking-wider">
-              Monthly Payouts
+              Total Wallet Value
             </p>
             <span className="material-symbols-outlined text-primary bg-primary/20 p-2 rounded-lg">
               payments
@@ -67,14 +70,11 @@ const WalletStats = () => {
           </div>
           <div>
             <p className="text-[#120e1b] dark:text-default-600 text-4xl font-black tracking-tight leading-none">
-              $5,820.50
+              {isLoading ? "…" : formatCurrency(wallet?.headlineTotal ?? 0)}
             </p>
-            <div className="w-full bg-[#d7d0e7] h-1.5 rounded-full mt-4">
-              <div
-                className="bg-primary h-full rounded-full"
-                style={{ width: "65%" }}
-              ></div>
-            </div>
+            <p className="text-[#654d99] text-xs font-medium mt-2">
+              Available + escrowed funds combined
+            </p>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import type {
 import { api, extractApiData } from "../index";
 import type { ApiEnvelope } from "../types";
 import { queryKeys } from "../../lib/query-keys";
+import { getPersistedAuthToken } from "../../lib/auth-storage";
 
 type ApiDispute = {
   id: string;
@@ -43,6 +44,6 @@ export const useDisputesPage = () => {
       const rows = extractApiData(res);
       return rows.map(mapRow);
     },
-    enabled: typeof window !== "undefined" && !!localStorage.getItem("token"),
+    enabled: typeof window !== "undefined" && !!getPersistedAuthToken(),
   });
 };

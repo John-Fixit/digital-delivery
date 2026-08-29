@@ -3,6 +3,7 @@ import type { ShipmentType } from "../../utils/type-config";
 import { api, extractApiData } from "../index";
 import type { ApiEnvelope } from "../types";
 import { queryKeys } from "../../lib/query-keys";
+import { getPersistedAuthToken } from "../../lib/auth-storage";
 
 export const useShipmentByTrackingId = (trackingId: string | undefined) => {
   return useQuery({
@@ -16,6 +17,6 @@ export const useShipmentByTrackingId = (trackingId: string | undefined) => {
     enabled:
       !!trackingId &&
       typeof window !== "undefined" &&
-      !!localStorage.getItem("token"),
+      !!getPersistedAuthToken(),
   });
 };
