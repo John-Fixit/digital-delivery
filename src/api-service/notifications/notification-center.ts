@@ -1,9 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import type { NotificationType } from "../../services/notifications/mock-notifications";
 import { api, extractApiData } from "../index";
 import type { ApiEnvelope } from "../types";
 import { queryKeys } from "../../lib/query-keys";
 import { getPersistedAuthToken } from "../../lib/auth-storage";
+
+export type NotificationType = {
+  id: string;
+  title: string;
+  message: string;
+  time: string;
+  type: "escrow" | "shipment" | "alert";
+  read: boolean;
+  trackingId?: string;
+};
 
 type ApiNotification = {
   id: string;

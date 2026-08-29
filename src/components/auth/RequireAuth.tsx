@@ -7,16 +7,20 @@ import { getPersistedAuthToken } from "../../lib/auth-storage";
 import { useSessionExpiredStore } from "../../stores/session-expired-store";
 import FullScreenProfileLoader from "./FullScreenProfileLoader";
 import FullScreenProfileError from "./FullScreenProfileError";
+import { resolveRoleShell } from "../../lib/role-shell";
 
 type RequireAuthProps = {
   children?: ReactNode;
+  /** When set, only this role's shell may render `children` — others are sent to their own shell. */
+  requireRole?: "rider" | "admin" | "customer";
 };
 
 /**
- * Protects `/home/*`: requires token, loads profile before rendering shell,
- * handles network errors and expired sessions.
+ * Protects `/home/*`, `/rider/*`, and `/admin/*`: requires token, loads
+ * profile before rendering the shell, handles network errors and expired
+ * sessions, and (when `requireRole` is set) keeps each role in its own shell.
  */
-const RequireAuth = ({ children }: RequireAuthProps) => {
+const RequireAuth = ({ children, requireRole }: RequireAuthProps) => {
   const location = useLocation();
   const lockout = useSessionExpiredStore((s) => s.lockout);
   const token = getPersistedAuthToken();
@@ -63,6 +67,14 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
 
   if (!me.data?.user) {
     return <FullScreenProfileLoader message="Almost there…" />;
+  }
+
+  if (requireRole) {
+    const shell = resolveRoleShell(me.data.user.role);
+    const requiredShell = requireRole === "customer" ? "/home" : `/${requireRole}`;
+    if (shell !== requiredShell) {
+      return <Navigate to={shell} replace />;
+    }
   }
 
   return <>{children ?? <Outlet />}</>;

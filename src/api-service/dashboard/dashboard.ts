@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { api, extractApiData } from "../index";
 import type { ApiEnvelope } from "../types";
+import type { ShipmentType, TimelineType } from "../../utils/type-config";
 import { queryKeys } from "../../lib/query-keys";
 import { getPersistedAuthToken } from "../../lib/auth-storage";
 
@@ -36,6 +37,11 @@ export type DashboardUiDataType = {
   pendingShipments: number;
   completedShipments: number;
   totalShipments: number;
+  recentShipments: ShipmentType[];
+  ongoingShipments: ShipmentType[];
+  currentOrderTimeline: TimelineType[];
+  currentOrderTrackingId: string | null;
+  currentOrderStatus: ShipmentType["status"] | null;
 };
 
 export const useDashboard = () => {

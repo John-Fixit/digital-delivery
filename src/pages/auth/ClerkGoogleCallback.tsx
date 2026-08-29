@@ -35,7 +35,7 @@ const ClerkGoogleCallback = () => {
           clerk_session_token: clerkToken,
         });
         setCurrentUser(payload);
-        const next = resolvePostLoginRedirect(searchParams.get("from"));
+        const next = resolvePostLoginRedirect(searchParams.get("from"), payload.user.role);
         navigate(next, { replace: true });
       } catch (err) {
         setError(getApiErrorMessage(err, "Could not complete Google sign-in."));

@@ -3,20 +3,14 @@ import PageHeader from "../../components/shared/page-header/PageHeader";
 import LoadingState from "../../components/shared/states/LoadingState";
 import ErrorState from "../../components/shared/states/ErrorState";
 import EmptyState from "../../components/shared/states/EmptyState";
-import type {
-  DisputeStatus,
-  DisputeType,
-} from "../../services/disputes/mock-disputes";
 import useModalStore from "../../hooks/use-modal-store";
 import useDrawerStore from "../../hooks/use-drawer-store";
 import { DRAWER_NAMES, MODAL_NAMES } from "../../lib/overlay-names";
-import { useDisputesPage } from "../../api-service/disputes/disputes-page";
-
-const getNextStatus = (status: DisputeStatus): DisputeStatus => {
-  if (status === "Open") return "Under Review";
-  if (status === "Under Review") return "Resolved";
-  return "Open";
-};
+import {
+  useDisputesPage,
+  type DisputeStatus,
+  type DisputeType,
+} from "../../api-service/disputes/disputes-page";
 
 const statusColorMap: Record<DisputeStatus, string> = {
   Open: "bg-warning-bg text-warning",
@@ -29,30 +23,18 @@ const DisputesPage = () => {
   const { openModal } = useModalStore();
   const { openDrawer } = useDrawerStore();
   const [statusFilter, setStatusFilter] = useState<"All" | DisputeStatus>("All");
-  const [localOverrides, setLocalOverrides] = useState<Record<string, DisputeStatus>>({});
 
   const { data: disputes = [], isLoading, isError, error, refetch } = useDisputesPage();
 
   const errorMessage =
     isError && error instanceof Error ? error.message : "Could not load disputes.";
 
-  const mergedDisputes = useMemo(() => {
-    return disputes.map((d) => ({
-      ...d,
-      status: localOverrides[d.id] ?? d.status,
-    }));
-  }, [disputes, localOverrides]);
-
   const filteredDisputes = useMemo(() => {
     if (statusFilter === "All") {
-      return mergedDisputes;
+      return disputes;
     }
-    return mergedDisputes.filter((item) => item.status === statusFilter);
-  }, [mergedDisputes, statusFilter]);
-
-  const updateStatus = (id: string, current: DisputeStatus) => {
-    setLocalOverrides((prev) => ({ ...prev, [id]: getNextStatus(current) }));
-  };
+    return disputes.filter((item) => item.status === statusFilter);
+  }, [disputes, statusFilter]);
 
   return (
     <div className="space-y-6 p-4 sm:p-6 lg:p-8">
@@ -127,13 +109,6 @@ const DisputesPage = () => {
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => updateStatus(dispute.id, dispute.status)}
-                  className="rounded-md border border-border-light px-3 py-1.5 text-xs font-semibold hover:bg-slate-50 dark:border-border-dark dark:hover:bg-slate-800"
-                >
-                  Move to {getNextStatus(dispute.status)}
-                </button>
                 <button
                   type="button"
                   onClick={() =>

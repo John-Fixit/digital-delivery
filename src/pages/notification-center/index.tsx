@@ -3,11 +3,13 @@ import PageHeader from "../../components/shared/page-header/PageHeader";
 import LoadingState from "../../components/shared/states/LoadingState";
 import ErrorState from "../../components/shared/states/ErrorState";
 import EmptyState from "../../components/shared/states/EmptyState";
-import type { NotificationType } from "../../services/notifications/mock-notifications";
 import useModalStore from "../../hooks/use-modal-store";
 import useDrawerStore from "../../hooks/use-drawer-store";
 import { DRAWER_NAMES, MODAL_NAMES } from "../../lib/overlay-names";
-import { useNotificationCenter } from "../../api-service/notifications/notification-center";
+import {
+  useNotificationCenter,
+  type NotificationType,
+} from "../../api-service/notifications/notification-center";
 
 const NotificationCenter = () => {
   const { openModal } = useModalStore();

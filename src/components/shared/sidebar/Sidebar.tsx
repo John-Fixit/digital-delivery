@@ -14,7 +14,7 @@ import { useScreenSize } from "react-haiku";
 import useSidebarStore from "../../../hooks/use-sidebar-store";
 import Button from "../ui/button/Button";
 import { preProfileLink } from "../../../utils/pre-profile-link";
-import { navItems } from "../../../lib/sidebar-menu-items";
+import { navItems, riderNavItems, adminNavItems } from "../../../lib/sidebar-menu-items";
 import useCurrentUser from "../../../hooks/use-current-user";
 
 type DropDownTargetStateType = {
@@ -46,6 +46,8 @@ const Sidebar = () => {
   };
 
   const { user } = useCurrentUser();
+  const navItemsForRole =
+    user?.role === "rider" ? riderNavItems : user?.role === "admin" ? adminNavItems : navItems;
 
   return (
     <>
@@ -115,16 +117,18 @@ const Sidebar = () => {
                     ? "Package Owner"
                     : user?.role === "rider"
                       ? "Rider"
-                      : "Driver"}
+                      : user?.role === "admin"
+                        ? "Admin"
+                        : "Driver"}
                 </p>
               </div>
             </div>
           </div>
           <ul className="space-y-1">
-            {navItems.map((item) => {
+            {navItemsForRole.map((item) => {
               const isActive =
-                item.path === "/home"
-                  ? currentPath === "/home"
+                item.path === "/home" || item.path === "/rider" || item.path === "/admin"
+                  ? currentPath === item.path
                   : currentPath.startsWith(item.path);
               const Icon = isActive ? item?.activeIcon || item.icon : item.icon;
               const isDropActive = currentPath.startsWith(

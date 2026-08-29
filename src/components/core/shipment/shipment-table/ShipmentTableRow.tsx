@@ -6,11 +6,12 @@ type PropTypes = {
   onViewShipment: () => void;
 };
 const ShipmentTableRow: FC<PropTypes> = ({ shipment, onViewShipment }) => {
-  const getStatusColor = (status: "In Transit" | "Pending" | "Delivered") => {
+  const getStatusColor = (status: ShipmentType["status"]) => {
     const colors = {
       "In Transit": "bg-info-bg text-info",
       Pending: "bg-warning-bg text-warning",
       Delivered: "bg-success-bg text-success",
+      Cancelled: "bg-danger-bg text-danger",
     };
     return colors[status] || "bg-gray-100 text-gray-700";
   };

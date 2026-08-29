@@ -28,5 +28,6 @@ export type ShipmentType = {
     name: string;
   };
   vehicleType: "bike" | "van" | "truck";
-  status: "In Transit" | "Pending" | "Delivered";
+  status: "In Transit" | "Pending" | "Delivered" | "Cancelled";
+  createdAt: string;
 };

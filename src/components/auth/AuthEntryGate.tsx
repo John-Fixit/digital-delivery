@@ -5,6 +5,7 @@ import useCurrentUser from "../../hooks/use-current-user";
 import { useMe } from "../../api-service/auth/me";
 import { getPersistedAuthToken } from "../../lib/auth-storage";
 import { resolvePostLoginRedirect } from "../../lib/post-login-redirect";
+import { resolveRoleShell } from "../../lib/role-shell";
 import FullScreenProfileLoader from "./FullScreenProfileLoader";
 import FullScreenProfileError from "./FullScreenProfileError";
 
@@ -32,8 +33,8 @@ const AuthEntryGate = ({ children, redirectMode }: AuthEntryGateProps) => {
     useCurrentUser.getState().setCurrentUser({ token: t, user: me.data.user });
     const dest =
       redirectMode === "home"
-        ? "/home"
-        : resolvePostLoginRedirect(fromParam);
+        ? resolveRoleShell(me.data.user.role)
+        : resolvePostLoginRedirect(fromParam, me.data.user.role);
     navigate(dest, { replace: true });
   }, [me.isSuccess, me.data, navigate, redirectMode, fromParam]);
 

@@ -12,6 +12,7 @@ export const queryKeys = {
   notifications: {
     all: ["notifications"] as const,
     list: () => [...queryKeys.notifications.all, "list"] as const,
+    preferences: () => [...queryKeys.notifications.all, "preferences"] as const,
   },
   disputes: {
     all: ["disputes"] as const,
@@ -23,5 +24,22 @@ export const queryKeys = {
   },
   dashboard: {
     all: ["dashboard"] as const,
+  },
+  riders: {
+    all: ["riders"] as const,
+    me: () => [...queryKeys.riders.all, "me"] as const,
+    available: () => [...queryKeys.riders.all, "available"] as const,
+    myJobs: (active: boolean) => [...queryKeys.riders.all, "jobs", { active }] as const,
+    earnings: () => [...queryKeys.riders.all, "earnings"] as const,
+  },
+  admin: {
+    all: ["admin"] as const,
+    overview: () => [...queryKeys.admin.all, "overview"] as const,
+    shipments: () => [...queryKeys.admin.all, "shipments"] as const,
+    users: () => [...queryKeys.admin.all, "users"] as const,
+    riders: (status: string) => [...queryKeys.admin.all, "riders", status] as const,
+    wallets: () => [...queryKeys.admin.all, "wallets"] as const,
+    escrow: (status: string) => [...queryKeys.admin.all, "escrow", status] as const,
+    disputes: () => [...queryKeys.admin.all, "disputes"] as const,
   },
 };

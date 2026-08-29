@@ -11,6 +11,7 @@ const ShipmentFilters = ({ statusFilter, onStatusChange }: PropTypes) => {
     "In Transit",
     "Pending",
     "Delivered",
+    "Cancelled",
   ];
 
   return (

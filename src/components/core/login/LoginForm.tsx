@@ -40,7 +40,7 @@ const LoginForm = () => {
     try {
       const res = await login.mutateAsync(values);
       setCurrentUser(res);
-      const next = resolvePostLoginRedirect(searchParams.get("from"));
+      const next = resolvePostLoginRedirect(searchParams.get("from"), res.user.role);
       navigate(next, { replace: true });
     } catch (err) {
       console.log(err);
